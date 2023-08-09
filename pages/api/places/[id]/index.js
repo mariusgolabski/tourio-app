@@ -14,4 +14,17 @@ export default async function handler(request, response) {
 
     response.status(200).json(place);
   }
+
+  if (request.method === "PATCH") {
+    try {
+      const placeData = request.body;
+      await Place.findByIdAndUpdate(id, placeData);
+      return response
+        .status(200)
+        .json({ message: "Place successfully updated." });
+    } catch (error) {
+      console.error("Error updating place:", error);
+      return response.status(400).json({ error: error.message });
+    }
+  }
 }
